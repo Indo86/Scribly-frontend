@@ -129,7 +129,7 @@ const totalBookmarks = computed(() =>
   <div class="main-content">
     <div class="bookmark-header">
       <h1>Bookmarks</h1>
-      <span class="bookmark-count">{{ totalBookmarks }} items</span>
+      <span class="bookmark-count">{{ totalBookmarks }} Notes</span>
     </div>
     
     <!-- Pinned bookmarked notes section -->

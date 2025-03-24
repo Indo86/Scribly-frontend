@@ -2,6 +2,7 @@
 import { defineProps, defineEmits, ref, watch } from 'vue';
 import BaseButton from '../button/BaseButton.vue';
 import IconButton from '../button/IconButton.vue';
+
 const props = defineProps({
   show: {
     type: Boolean,
@@ -15,6 +16,7 @@ const props = defineProps({
 
 const emit = defineEmits(['close', 'save', 'pin', 'bookmark']);
 const localNote = ref(null);
+let isProcessing = false;
 
 watch(() => props.note, (newVal) => {
   if (newVal) {
@@ -32,20 +34,32 @@ const save = () => {
   }
 };
 
-const togglePin = () => {
+const togglePin = (event) => {
+  if (isProcessing) return;
+  isProcessing = true;
+  
+  setTimeout(() => {
+    isProcessing = false;
+  }, 100);
   if (localNote.value) {
     localNote.value.pinned = !localNote.value.pinned;
-    // Tambahkan emit untuk langsung menyimpan perubahan status pin
-    emit('pin', localNote.value.id);
-    console.log('ini pin dari' + localNote.value.pinned)
+    emit('pin', localNote.value.id, event);
+
   }
 };
 
-const toggleBookmark = () => {
+const toggleBookmark = (event) => {
+
+  if (isProcessing) return;
+  isProcessing = true;
+  
+  setTimeout(() => {
+    isProcessing = false;
+  }, 100);
+
   if (localNote.value) {
     localNote.value.bookmarked = !localNote.value.bookmarked;
-    // Tambahkan emit untuk langsung menyimpan perubahan status bookmark
-    emit('bookmark', localNote.value.id);
+    emit('bookmark', localNote.value.id, event);
   }
 };
 
@@ -67,19 +81,13 @@ const toggleBookmark = () => {
             :icon="localNote.pinned ? 'bi-pin-angle-fill' : 'bi-pin-angle'" 
             :active="localNote.pinned"
             :title="localNote.pinned ? 'Unpin' : 'Pin'"
-            @click="togglePin"
+            @click.stop="togglePin"
           />
           <IconButton 
             :icon="localNote.bookmarked ? 'bi-bookmark-fill' : 'bi-bookmark'" 
             :active="localNote.bookmarked"
             :title="localNote.bookmarked ? 'Unbookmark' : 'Bookmark'"
-            @click="toggleBookmark"
-          />
-          <IconButton 
-            :icon="localNote.archived ? 'bi-archive-fill' : 'bi-archive'" 
-            :active="localNote.archived"
-            :title="localNote.archived ? 'Unarchive' : 'Archive'"
-            @click="toggleArchive"
+            @click.stop="toggleBookmark"
           />
           <button class="btn-close ms-2" @click="close"></button>
         </div>

@@ -192,6 +192,8 @@ const unpinnedNotes = computed(() =>
       :note="currentNote"
       @close="closeModal"
       @save="saveChanges"
+      @pin="togglePinned"
+      @bookmark="toggleBookmarked"
     />
   </div>
 </template>

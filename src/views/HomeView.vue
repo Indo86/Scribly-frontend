@@ -12,7 +12,7 @@ const editingId = ref(null);
 const filter = ref('all'); // Filter status: all, active, completed
 const loading = ref(false);
 
-// Fetch todos from API
+// Fetch  API
 const fetchTodos = async () => {
   loading.value = true;
   try {

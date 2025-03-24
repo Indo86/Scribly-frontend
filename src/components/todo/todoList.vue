@@ -74,7 +74,7 @@ const hasCompleted = computed(() => {
       
       <!-- Footer -->
       <div class="card-footer d-flex justify-content-between align-items-center" v-if="todos.length > 0">
-        <small class="text-muted">{{ activeTodoCount }} items left</small>
+        <small class="text-muted">{{ activeTodoCount }} To Do left</small>
         <BaseButton 
           type="danger"
           class="btn btn-sm"
